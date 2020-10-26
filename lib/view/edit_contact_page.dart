@@ -21,7 +21,7 @@ class _EditContactPageState extends State<EditContactPage> {
     _phoneController.text=contact.telephone;
     return Scaffold(
         appBar: AppBar(
-          automaticallyImplyLeading: false,
+          //automaticallyImplyLeading: false,
           title: Text("Contact Info"),
         ),
         body: Container(
@@ -29,6 +29,11 @@ class _EditContactPageState extends State<EditContactPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Center(
+                    child: Image.asset('assets/img/contact.svg',
+                        width: 80,
+                        height: 80)
+                ),
                 TextFormField(
                   controller: _nameController,
                   decoration: InputDecoration(
@@ -60,8 +65,9 @@ class _EditContactPageState extends State<EditContactPage> {
                   onPressed: () async{
                     if(_nameController.text!="" && _phoneController.text!="" && _emailController.text!=""){
                       await _contactDao.updateContact(Contact(id:contact.id,name: _nameController.text,telephone: _phoneController.text,email: _emailController.text));
+                      Navigator.pop(context);
                     }
-                    Navigator.pop(context);
+
                     print(_nameController.text);
                   },
                   child: Text('Update Contact'),

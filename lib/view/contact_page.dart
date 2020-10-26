@@ -16,7 +16,7 @@ class _ContactPageState extends State<ContactPage> {
     final _contactDao=Provider.of<ContactDao>(context);
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: false,
         title: Text("Contact Info"),
       ),
       body: Container(
@@ -24,6 +24,11 @@ class _ContactPageState extends State<ContactPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+              Center(
+                  child: Image.asset('assets/img/contact.svg',
+                          width: 80,
+                          height: 80)
+              ),
             TextFormField(
               controller: _nameController,
               decoration: InputDecoration(
@@ -55,8 +60,9 @@ class _ContactPageState extends State<ContactPage> {
               onPressed: () async{
                 if(_nameController.text!="" && _phoneController.text!="" && _emailController.text!=""){
                   await _contactDao.insertContact(Contact(id:null,name: _nameController.text,telephone: _phoneController.text,email: _emailController.text));
+                  Navigator.pop(context);
                 }
-                Navigator.pop(context);
+
                 print(_nameController.text);
               },
               child: Text('Create Contact'),

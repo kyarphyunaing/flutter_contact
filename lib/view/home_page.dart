@@ -11,12 +11,19 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _contactDao = Provider.of<ContactDao>(context);
     return Scaffold(
-      appBar: AppBar(title: Text("Contacts")),
+      appBar: AppBar(title: Text("Contact Book")),
       body: Container(
           child: StreamBuilder(
         stream: _contactDao.getAllContact(),
         builder: (BuildContext context, AsyncSnapshot<List<Contact>> snapshot) {
           if (snapshot.hasData) {
+            if(snapshot.data.isEmpty){
+              return Center(
+                child: Image.asset('assets/img/contact.svg',
+                width: 100,
+                height: 100)
+              );
+            }
             return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -37,7 +44,7 @@ class HomePage extends StatelessWidget {
         },
       )),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(Icons.contacts),
         onPressed: () {
           Navigator.push(
             context,
@@ -66,11 +73,18 @@ class HomePage extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
           ),
         ),
+        leading:IconButton(
+            icon: Icon(Icons.contacts_outlined,color: Colors.blue),
+        // Container(
+         // child: //Image.asset('assets/img/contact.svg',
+              //width: 40,
+              //height: 40),
+          ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             IconButton(
-              icon: Icon(Icons.edit),
+              icon: Icon(Icons.edit,color: Colors.blue),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -78,15 +92,13 @@ class HomePage extends StatelessWidget {
                     builder: (context) => EditContactPage(),
                     // Pass the arguments as part of the RouteSettings. The
                     // DetailScreen reads the arguments from these settings.
-                    settings: RouteSettings(
-                      arguments: contact
-                    ),
+                    settings: RouteSettings(arguments: contact),
                   ),
                 );
               },
             ),
             IconButton(
-              icon: Icon(Icons.delete),
+              icon: Icon(Icons.delete,color: Colors.blue),
               onPressed: () {
                 showAlertDialog(context, contactDao, contact);
               },
@@ -107,7 +119,7 @@ class HomePage extends StatelessWidget {
       },
     );
     Widget continueButton = FlatButton(
-      child: Text("Continue"),
+      child: Text("Confirm"),
       onPressed: () async {
         await contactDao.deleteContact(contact);
         Navigator.pop(context);
@@ -115,8 +127,8 @@ class HomePage extends StatelessWidget {
     );
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("AlertDialog"),
-      content: Text("Would you like to delete?"),
+      title: Text("Delete Contact"),
+      content: Text("Are you sure you want to delete?"),
       actions: [
         cancelButton,
         continueButton,
