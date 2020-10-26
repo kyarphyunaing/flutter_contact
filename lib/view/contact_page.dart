@@ -17,7 +17,7 @@ class _ContactPageState extends State<ContactPage> {
     return Scaffold(
       appBar: AppBar(
         //automaticallyImplyLeading: false,
-        title: Text("Contact Info"),
+        title: Text("Update Contact"),
       ),
       body: Container(
         padding: EdgeInsets.all(10),

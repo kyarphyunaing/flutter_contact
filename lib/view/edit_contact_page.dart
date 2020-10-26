@@ -22,7 +22,7 @@ class _EditContactPageState extends State<EditContactPage> {
     return Scaffold(
         appBar: AppBar(
           //automaticallyImplyLeading: false,
-          title: Text("Contact Info"),
+          title: Text("Create Contact"),
         ),
         body: Container(
             padding: EdgeInsets.all(10),
